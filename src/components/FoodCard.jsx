@@ -1,6 +1,6 @@
 const FoodCard = ({ food }) => {
   return (
-    <div className="bg-white dark:bg-gray-800/90 shadow-lg rounded-2xl p-4 w-64 transition-colors duration-300 border border-gray-200/90 dark:border-gray-700">
+    <div className="bg-white/90 dark:bg-gray-800/90 shadow-lg rounded-2xl p-4 w-64 transition-colors duration-300 border border-gray-300 dark:border-gray-700 text-black dark:text-white">
       <img
         src={food.image}
         alt={food.name}
