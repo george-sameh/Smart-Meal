@@ -1,11 +1,91 @@
-const Login = () => {
+import { useState } from "react";
+import { dosigninwithemailandpassword, dosigninwithgoogle } from "./Firebase/auth";
+import { db } from "./Firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFirebaseError = (error) => {
+    switch (error.code) {
+      case "auth/invalid-credential":
+        return "البريد الإلكتروني أو كلمة السر غير صحيحة.";
+      case "auth/user-not-found":
+        return "لا يوجد حساب بهذا البريد الإلكتروني. برجاء التسجيل أولا.";
+      case "auth/too-many-requests":
+        return "تم حظر الحساب مؤقتا بسبب محاولات فاشلة متكررة.";
+      case "auth/network-request-failed":
+        return "فشل الاتصال بالشبكة. تحقق من الإنترنت.";
+
+      case "auth/popup-closed-by-user":
+        return "تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية.";
+      case "auth/google-user-not-found":
+        return "لا يوجد حساب بهذا البريد. برجاء التسجيل أولاً.";
+
+      default:
+        console.log(error)
+        return "حدث خطأ غير متوقع. حاول مرة أخرى.";
+    }
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (isSigningIn) return;
+
+    setIsSigningIn(true);
+    setErrorMessage("");
+
+    try {
+      await dosigninwithemailandpassword(email, password);
+      alert("تم تسجيل الدخول بنجاح");
+    } catch (error) {
+      setErrorMessage(handleFirebaseError(error));
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  const onGoogleSignIn = async (e) => {
+    e.preventDefault();
+    if (isSigningIn) return;
+
+    setIsSigningIn(true);
+    setErrorMessage("");
+
+    try {
+      const userCredential = await dosigninwithgoogle();
+      const user = userCredential.user;
+
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) { 
+        throw { code: "auth/google-user-not-found" }; 
+      }
+
+      alert("تم تسجيل الدخول بنجاح");
+
+    } catch (error) {
+      setErrorMessage(handleFirebaseError(error));
+    } finally {
+      setIsSigningIn(false);
+    }
+
+  };
+  
   return (
     <div className="pt-32 flex justify-center">
       <div className="bg-white/90 dark:bg-gray-800/90 transition-colors duration-300 text-black dark:text-white p-10 rounded-2xl shadow-lg max-w-md w-full border border-gray-300 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-center">تسجيل الدخول</h1>
 
-        <form>
+        {errorMessage && (
+          <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+        )}
+
+        <form onSubmit={onSubmit}>
           <div className="my-4 text-right">
             <label htmlFor="email" className="block mb-2 font-semibold">
               البريد الإلكتروني
@@ -13,8 +93,11 @@ const Login = () => {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="example@email.com"
               dir="ltr"
+              required
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all text-left"
             />
           </div>
@@ -32,17 +115,25 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              placeholder="********"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder=""
               dir="ltr"
+              required
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all text-left"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
+            disabled={isSigningIn}
+            className={`w-full font-bold py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer ${
+              isSigningIn
+                ? "bg-gray-400 text-white"
+                : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white"
+            }`}
           >
-            تسجيل الدخول
+            {isSigningIn ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
           </button>
         </form>
         
@@ -60,9 +151,11 @@ const Login = () => {
         </div>
 
         <button
+          onClick={onGoogleSignIn}
+          disabled={isSigningIn}
           className="w-full border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
         >
-          تسجيل الدخول باستخدام Google
+          {isSigningIn ? "جاري تسجيل الدخول..." : "تسجيل الدخول باستخدام Google"}
         </button>
       </div>
     </div>
