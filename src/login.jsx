@@ -29,12 +29,12 @@ const Login = () => {
         return "لا يوجد حساب بهذا البريد. برجاء التسجيل أولاً.";
 
       default:
-        console.log(error)
+        console.log(error);
         return "حدث خطأ غير متوقع. حاول مرة أخرى.";
     }
   };
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSigningIn) return;
 
@@ -93,7 +93,7 @@ const Login = () => {
           <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
         )}
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="my-4 text-right">
             <label htmlFor="email" className="block mb-2 font-semibold">
               البريد الإلكتروني
