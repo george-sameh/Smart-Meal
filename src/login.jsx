@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { auth } from "./Firebase/firebase";
 import { dosigninwithemailandpassword, dosigninwithgoogle } from "./Firebase/auth";
 import { db } from "./Firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -15,6 +16,8 @@ const Login = () => {
         return "البريد الإلكتروني أو كلمة السر غير صحيحة.";
       case "auth/user-not-found":
         return "لا يوجد حساب بهذا البريد الإلكتروني. برجاء التسجيل أولا.";
+      case "auth/email-not-verified":
+        return "يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب.";
       case "auth/too-many-requests":
         return "تم حظر الحساب مؤقتا بسبب محاولات فاشلة متكررة.";
       case "auth/network-request-failed":
@@ -40,6 +43,11 @@ const Login = () => {
 
     try {
       await dosigninwithemailandpassword(email, password);
+
+      if (!auth.currentUser.emailVerified) {
+        throw { code: "auth/email-not-verified" };
+      }
+
       alert("تم تسجيل الدخول بنجاح");
     } catch (error) {
       setErrorMessage(handleFirebaseError(error));
@@ -117,7 +125,7 @@ const Login = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder=""
+              placeholder="********"
               dir="ltr"
               required
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all text-left"

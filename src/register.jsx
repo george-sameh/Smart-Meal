@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { docreateUserWithEmailAndPassword, dosigninwithgoogle } from "./Firebase/auth";
+import { docreateUserWithEmailAndPassword, dosendEmailVerification, dosigninwithgoogle } from "./Firebase/auth";
 import { db } from "./Firebase/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
@@ -43,7 +43,9 @@ const Register = () => {
         email: user.email,
         createdAt: serverTimestamp(), 
       });
-      alert("تم إنشاء الحساب بنجاح");
+
+      await dosendEmailVerification();
+      alert("تم إرسال رابط التحقق إلى بريدك الإلكتروني.");
 
       } catch (error) {
         setErrorMessage(handleFirebaseError(error));
@@ -138,7 +140,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder=""
+              placeholder="********"
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all text-left"
               dir="ltr"
             />
