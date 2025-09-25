@@ -115,7 +115,7 @@ const Login = () => {
               <label htmlFor="password" className="font-semibold">
                 كلمة السر
               </label>
-              <a href="#" className="text-sm text-blue-500 hover:underline">
+              <a href="/resetPassword" className="text-sm text-blue-500 hover:underline">
                 نسيت كلمة السر؟
               </a>
             </div>
