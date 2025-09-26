@@ -5,9 +5,7 @@ import { dosignout } from "./Firebase/auth";
 const Profile = () => {
   const { userLoggedIn, currentUser } = useAuth();
 
-  if (!userLoggedIn) {
-    return <Navigate to="/login" />;
-  } else if(!currentUser.emailVerified) {
+  if (!userLoggedIn || !currentUser.emailVerified) {
     return <Navigate to="/login" />;
   }
 

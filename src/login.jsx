@@ -20,7 +20,7 @@ const Login = () => {
       case "auth/user-not-found":
         return "لا يوجد حساب بهذا البريد الإلكتروني. برجاء التسجيل أولا.";
       case "auth/email-not-verified":
-        return "يرجى التحقق من بريدك الإلكتروني لتفعيل الحساب.";
+        return "البريد الإلكتروني غير مفعل.";
       case "auth/too-many-requests":
         return "تم حظر الحساب مؤقتا بسبب محاولات فاشلة متكررة.";
       case "auth/network-request-failed":
@@ -45,13 +45,13 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      await dosigninwithemailandpassword(email, password);
-
       if (!auth.currentUser.emailVerified) {
-        await dosendEmailVerification();
+        navigate("/verifyEmail");
+        alert("لم يتم تفعيل بريدك الالكتروني. سيتم إعادة توجيهك لصفحة التحقق.");
         throw { code: "auth/email-not-verified" };
       }
 
+      await dosigninwithemailandpassword(email, password);
       alert("تم تسجيل الدخول بنجاح");
       navigate("/profile");
       

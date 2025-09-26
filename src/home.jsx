@@ -5,7 +5,7 @@ import { Search, CircleX } from 'lucide-react';
 const Home = () => {
   return (
     <div>
-      <div className="w-1/2 mx-auto">
+      <div className="w-[80%] mx-auto">
         <div className="flex items-center justify-center border-2 border-gray-300 dark:border-gray-400 rounded-xl shadow-xl p-2 gap-2 focus-within:ring-2 focus-within:ring-blue-400 transition-all">
           <Search className="text-gray-400/90" size={25} />
           <input
