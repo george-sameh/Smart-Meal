@@ -40,6 +40,6 @@ export const dopasswordChange = (password) => {
 
 export const dosendEmailVerification = () => {
   return sendEmailVerification(auth.currentUser, {
-    url: `${window.location.origin}/home`
+    url: `${window.location.origin}/profile`
   });
 }
