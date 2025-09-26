@@ -49,7 +49,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         </li>
         <li>
           <Link
-            to="/login"
+            to="/profile"
             className="p-3 block hover:bg-indigo-400 dark:hover:bg-indigo-500 text-white rounded-lg transition-all hover:shadow-lg"
           >
             حسابي
@@ -95,7 +95,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
             </Link>
           </li>
           <li className="w-full text-center p-4 hover:bg-sky-400 hover:text-white transition-all">
-            <Link to="/login" className="block w-full">
+            <Link to="/profile" className="block w-full">
               حسابي
             </Link>
           </li>

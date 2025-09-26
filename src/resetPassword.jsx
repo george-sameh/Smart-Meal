@@ -1,10 +1,19 @@
 import { dopasswordreset } from "./Firebase/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [isReseting, setIsReseting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [cooldown, setCooldown] = useState(0);
+
+    useEffect(() => {
+      if (cooldown === 0) return;
+      const interval = setInterval(() => {
+        setCooldown((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }, [cooldown]);
 
   const handleFirebaseError = (error) => {
     switch (error.code) {
@@ -31,6 +40,7 @@ const ResetPassword = () => {
     try {
       await dopasswordreset(email);
       alert("تم إرسال رابط إعادة تعيين كلمة السر إلى بريدك الإلكتروني.");
+      setCooldown(30);
     } catch (error) {
       setErrorMessage(handleFirebaseError(error));
     } finally {
@@ -66,14 +76,18 @@ const ResetPassword = () => {
 
         <button
           type="submit"
-          disabled={isReseting}
+          disabled={isReseting || cooldown > 0}
           className={`w-full font-bold py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer ${
-            isReseting
+            isReseting || cooldown > 0
               ? "bg-gray-400 text-white"
               : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white"
           }`}
         >
-          {isReseting ? "جاري إعادة تعيين كلمة السر..." : "إعادة تعيين كلمة السر"}
+            {isReseting
+            ? "جاري إعادة تعيين كلمة السر..."
+            : cooldown > 0
+            ? `انتظر ${cooldown} ثانية لإعادة الإرسال`
+            : "إرسال رابط إعادة تعيين كلمة السر"}
         </button>
       </form>
 

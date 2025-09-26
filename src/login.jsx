@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { auth } from "./Firebase/firebase";
-import { dosigninwithemailandpassword, dosigninwithgoogle, dosendEmailVerification } from "./Firebase/auth";
+import { dosigninwithemailandpassword, dosigninwithgoogle } from "./Firebase/auth";
 import { db } from "./Firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +44,9 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      if (!auth.currentUser.emailVerified) {
+      const { user } = await dosigninwithemailandpassword(email, password);
+
+      if (!user.emailVerified) {
         navigate("/verifyEmail");
         alert("لم يتم تفعيل بريدك الالكتروني. سيتم إعادة توجيهك لصفحة التحقق.");
         throw { code: "auth/email-not-verified" };
