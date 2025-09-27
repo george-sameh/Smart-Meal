@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { dopasswordreset } from "./Firebase/auth";
 import { useState, useEffect } from "react";
 
@@ -51,7 +52,7 @@ const ResetPassword = () => {
 
   return (
     <div className="bg-white/90 dark:bg-gray-800/90 transition-colors duration-300 text-black dark:text-white p-10 rounded-2xl shadow-lg max-w-md w-full border border-gray-300 dark:border-gray-700">
-      <h1 className="text-2xl font-bold text-center">إعادة تعيين كلمة السر</h1>
+      <h1 className="text-2xl font-bold text-center">{t("resetPassword")}</h1>
 
       {errorMessage && (
         <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
@@ -60,7 +61,7 @@ const ResetPassword = () => {
       <form onSubmit={handleSubmit}>
         <div className="my-4 text-right">
           <label htmlFor="email" className="block mb-2 font-semibold">
-            البريد الإلكتروني
+            {t("email")}
           </label>
           <input
             type="email"
@@ -84,15 +85,15 @@ const ResetPassword = () => {
           }`}
         >
             {isReseting
-            ? "جاري إعادة تعيين كلمة السر..."
+            ? t("resettingPassword")
             : cooldown > 0
-            ? `انتظر ${cooldown} ثانية لإعادة الإرسال`
-            : "إرسال رابط إعادة تعيين كلمة السر"}
+            ? `${t("wait")} ${cooldown} ${t("secondsToResend")}`
+            : t("sendResetLink")}
         </button>
       </form>
 
       <div className="text-center mt-4">
-        <a href="/login" className="text-blue-500 hover:underline text-sm">الرجوع إلى تسجيل الدخول</a>
+        <a href="/login" className="text-blue-500 hover:underline text-sm">{t("backToLogin")}</a>
       </div>
 
     </div>

@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Navbar from "./components/Navbar.jsx";
 import { AuthContextProvider } from "./contexts/authContext";
+import "./i18n";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

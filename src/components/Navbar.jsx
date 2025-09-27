@@ -1,9 +1,11 @@
 import { Search, Menu, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Navbar = ({ searchQuery, setSearchQuery }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
   const [isDarkMode, setIsDarkMode] = useState(() => {
     try {
       const savedTheme = localStorage.getItem("theme");
@@ -35,7 +37,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
     >
       <Link to="/" className="flex items-center gap-3 hover:scale-105 transition-all">
         <img src="/logo.png" alt="Smart Meal Logo" className="w-12 h-12" />
-        <span className="text-green-400 text-lg font-bold">وجبة ذكية</span>
+        <span className="text-green-400 text-lg font-bold">{t("smartMeal")}</span>
       </Link>
 
       <ul className="hidden lg:flex items-center gap-10 font-semibold text-base">
@@ -44,7 +46,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
             to="/"
             className="p-3 block hover:bg-indigo-400 dark:hover:bg-indigo-500 text-white rounded-lg transition-all hover:shadow-lg"
           >
-            الرئيسية
+            {t("home")}
           </Link>
         </li>
         <li>
@@ -52,7 +54,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
             to="/profile"
             className="p-3 block hover:bg-indigo-400 dark:hover:bg-indigo-500 text-white rounded-lg transition-all hover:shadow-lg"
           >
-            حسابي
+            {t("profile")}
           </Link>
         </li>
       </ul>
@@ -61,7 +63,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300" />
         <input
           type="text"
-          placeholder="البحث..."
+          placeholder={t("search")}
           value={searchQuery || ""}
           onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
           className={`rounded-xl py-2 pr-10 text-white border-blue-300 focus:bg-slate-600 focus:outline-sky-500 transition-all ${
@@ -69,12 +71,25 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
           }`}
         />
       </div>
+      
+      <div className="flex gap-2 items-center">
+        <button
+          type="button"
+          className="hidden lg:flex hover:scale-105 transition-all p-2 rounded-lg cursor-pointer hover:bg-white/25"
+          onClick={toggleTheme}
+        >
+          {isDarkMode ? <Sun className="text-amber-400" /> : <Moon className="text-blue-200" />}
+        </button>
 
-      <div
-        className="hidden lg:flex items-center group hover:scale-105 transition-all p-2 rounded-lg cursor-pointer hover:bg-white/25"
-        onClick={toggleTheme}
-      >
-        {isDarkMode ? <Sun className="text-amber-400" /> : <Moon className="text-blue-200" />}
+        <button
+          type="button"
+          className="hidden lg:flex text-white px-6 py-3 rounded-lg cursor-pointer bg-white/20 hover:bg-white/30 dark:bg-slate-700 dark:hover:bg-slate-600 transition-all"
+          onClick={() => i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar")}
+        >
+          <span className="leading-none">
+            {i18n.language === "en" ? "English" : "العربية"}
+          </span>
+        </button>
       </div>
 
       <div className="lg:hidden flex items-center" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -132,6 +147,17 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
             </>
           )}
         </button>
+
+        <button
+          type="button"
+          className="items-center justify-center flex gap-3 text-white px-6 py-3 rounded-lg bg-white/20 hover:bg-white/30 dark:bg-slate-700 dark:hover:bg-slate-600 transition-all w-11/12"
+          onClick={() => i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar")}
+        >
+          <span className="leading-none">
+            {i18n.language === "en" ? "English" : "العربية"}
+          </span>
+        </button>
+
       </div>
     </header>
   );

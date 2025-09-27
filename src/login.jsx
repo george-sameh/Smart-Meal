@@ -3,6 +3,7 @@ import { dosigninwithemailandpassword, dosigninwithgoogle } from "./Firebase/aut
 import { db } from "./Firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <div className="my-4 text-right">
           <label htmlFor="email" className="block mb-2 font-semibold">
-            البريد الإلكتروني
+            {t("email")}
           </label>
           <input
             type="email"
@@ -119,10 +120,10 @@ const Login = () => {
         <div className="my-4 text-right">
           <div className="flex justify-between items-center mb-2">
             <label htmlFor="password" className="font-semibold">
-              كلمة السر
+              {t("password")}
             </label>
             <a href="/resetPassword" className="text-sm text-blue-500 hover:underline">
-              نسيت كلمة السر؟
+              {t("forgetPassword")}
             </a>
           </div>
 
@@ -147,12 +148,12 @@ const Login = () => {
               : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white"
           }`}
         >
-          {isSigningIn ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
+          {isSigningIn ? t("loggingIn") : t("login")}
         </button>
       </form>
         
       <div className="text-center mt-4">
-        <a href="/register" className="text-blue-500 hover:underline text-sm">ليس لديك حساب؟ إنشاء حساب</a>
+        <a href="/register" className="text-blue-500 hover:underline text-sm">{t("doesnotHaveAccount")}</a>
       </div>
 
       <div className="relative my-4">
@@ -160,7 +161,7 @@ const Login = () => {
           <div className="w-full border-t border-gray-700"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-white dark:bg-gray-800 text-gray-400">أو تابع باستخدام</span>
+          <span className="px-2 bg-white dark:bg-gray-800 text-gray-400">{t("or")}</span>
         </div>
       </div>
 
@@ -169,7 +170,7 @@ const Login = () => {
         disabled={isSigningIn}
         className="w-full border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
       >
-        {isSigningIn ? "جاري تسجيل الدخول..." : "تسجيل الدخول باستخدام Google"}
+        {isSigningIn ? t("loggingIn") : t("signInWithGoogle")}
       </button>
     </div>
   );

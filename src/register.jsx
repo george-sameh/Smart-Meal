@@ -2,6 +2,7 @@ import { useState } from "react";
 import { docreateUserWithEmailAndPassword, dosendEmailVerification, dosigninwithgoogle } from "./Firebase/auth";
 import { db } from "./Firebase/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { t } from "i18next";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -84,7 +85,7 @@ const Register = () => {
 
   return (
     <div className="bg-white/90 dark:bg-gray-800/90 transition-colors duration-300 text-black dark:text-white p-10 rounded-2xl shadow-lg max-w-md w-full border border-gray-300 dark:border-gray-700">
-      <h1 className="text-2xl font-bold text-center">انشاء حساب</h1>
+      <h1 className="text-2xl font-bold text-center">{t("createAccount")}</h1>
 
       {errorMessage && (
         <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
@@ -93,7 +94,7 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <div className="my-4 text-right">
           <label htmlFor="name" className="block mb-2 font-semibold">
-            الأسم
+            {t("name")}
           </label>
           <input
             type="text"
@@ -101,14 +102,14 @@ const Register = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            placeholder="فلان الفلاني"
+            placeholder={t("namePlaceholder")}
             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all"
           />
         </div>
 
         <div className="my-4 text-right">
           <label htmlFor="email" className="block mb-2 font-semibold">
-            البريد الإلكتروني
+            {t("email")}
           </label>
           <input
             type="email"
@@ -125,7 +126,7 @@ const Register = () => {
         <div className="my-4 text-right">
           <div className="flex justify-between items-center mb-2">
             <label htmlFor="password" className="font-semibold">
-              كلمة السر
+              {t("password")}
             </label>
           </div>
 
@@ -150,12 +151,12 @@ const Register = () => {
               : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white"
           }`}
         >
-          {isRegistering ? "جاري إنشاء الحساب..." : "إنشاء حساب"}
+          {isRegistering ? t("creatingAccount") : t("createAccount")}
         </button>
       </form>
 
       <div className="text-center mt-4">
-        <a href="/login" className="text-blue-500 hover:underline text-sm">لديك حساب؟ سجل الدخول</a>
+        <a href="/login" className="text-blue-500 hover:underline text-sm">{t("alreadyHaveAccount")}</a>
       </div>
 
       <div className="relative my-6">
@@ -163,7 +164,7 @@ const Register = () => {
           <div className="w-full border-t border-gray-700"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-white dark:bg-gray-800 text-gray-400">أو تابع باستخدام</span>
+          <span className="px-2 bg-white dark:bg-gray-800 text-gray-400">{t("or")}</span>
         </div>
       </div>
 
@@ -172,7 +173,7 @@ const Register = () => {
         disabled={isRegistering}
         className="w-full border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white py-2 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
       >
-        {isRegistering ? "جاري إنشاء الحساب..." : "إنشاء حساب باستخدام Google"}
+        {isRegistering ? t("creatingAccount") : t("createAccountWithGoogle")}
       </button>
     </div>
   );

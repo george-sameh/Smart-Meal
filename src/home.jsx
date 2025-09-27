@@ -1,6 +1,7 @@
 import foods from "./data/foods";
 import FoodCard from "./components/FoodCard";
 import { Search, CircleX } from 'lucide-react';
+import { t } from "i18next";
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
           <Search className="text-gray-400/90" size={25} />
           <input
             type="text"
-            placeholder="ابحث عن الطعام..."
+            placeholder={t("searchFood")}
             className="border-none outline-none w-full text-gray-900 dark:text-white"
           />
           <CircleX className="text-gray-400/90" size={25} />
