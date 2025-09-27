@@ -1,9 +1,27 @@
-import foods from "./data/foods";
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./Firebase/firebase";
 import FoodCard from "./components/FoodCard";
 import { Search, CircleX } from 'lucide-react';
 import { t } from "i18next";
 
 const Home = () => {
+  const [foods, setFoods] = useState([]);
+
+  useEffect(() => {
+    const fetchFoods = async () => {
+      const foodsCol = collection(db, "foods");
+      const snapshot = await getDocs(foodsCol);
+      const foodList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setFoods(foodList);
+    };
+
+    fetchFoods();
+  }, []);
+
   return (
     <div>
       <div className="w-[80%] mx-auto">
