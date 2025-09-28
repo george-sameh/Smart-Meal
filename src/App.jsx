@@ -7,6 +7,7 @@ import Register from "./register";
 import ResetPassword from "./resetPassword";
 import VerifyEmail from "./verifyEmail";
 import Profile from "./profile";
+import FoodDetails from "./FoodDetails";
 
 const App = () => {
   const location = useLocation();
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="/verifyEmail" element={<VerifyEmail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/food/:id" element={<FoodDetails />} /> 
         </Routes>
       </div>
     </main>
