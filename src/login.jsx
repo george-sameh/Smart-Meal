@@ -3,10 +3,11 @@ import { dosigninwithemailandpassword, dosigninwithgoogle } from "./Firebase/aut
 import { db } from "./Firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,24 +17,24 @@ const Login = () => {
   const handleFirebaseError = (error) => {
     switch (error.code) {
       case "auth/invalid-credential":
-        return "البريد الإلكتروني أو كلمة السر غير صحيحة.";
+        return t("errors.invalidCredential");
       case "auth/user-not-found":
-        return "لا يوجد حساب بهذا البريد الإلكتروني. برجاء التسجيل أولا.";
+        return t("errors.userNotFound");
       case "auth/email-not-verified":
-        return "البريد الإلكتروني غير مفعل.";
+        return t("errors.emailNotVerified");
       case "auth/too-many-requests":
-        return "تم حظر الحساب مؤقتا بسبب محاولات فاشلة متكررة.";
+        return t("errors.tooManyRequests");
       case "auth/network-request-failed":
-        return "فشل الاتصال بالشبكة. تحقق من الإنترنت.";
+        return t("errors.networkRequestFailed");
 
       case "auth/popup-closed-by-user":
-        return "تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية.";
+        return t("errors.popupClosedByUser");
       case "auth/google-user-not-found":
-        return "لا يوجد حساب بهذا البريد. برجاء التسجيل أولاً.";
+        return t("errors.googleUserNotFound");
 
       default:
         console.log(error);
-        return "حدث خطأ غير متوقع. حاول مرة أخرى.";
+        return t("errors.defaultError");
     }
   };
 
@@ -49,12 +50,12 @@ const Login = () => {
 
       if (!user.emailVerified) {
         navigate("/verifyEmail");
-        alert("لم يتم تفعيل بريدك الالكتروني. سيتم إعادة توجيهك لصفحة التحقق.");
+        alert(t("emailNotVerifiedRedirect"));
         throw { code: "auth/email-not-verified" };
       }
 
       await dosigninwithemailandpassword(email, password);
-      alert("تم تسجيل الدخول بنجاح");
+      alert(t("signedInSuccessfully"));
       navigate("/profile");
       
     } catch (error) {
@@ -82,7 +83,7 @@ const Login = () => {
         throw { code: "auth/google-user-not-found" }; 
       }
 
-      alert("تم تسجيل الدخول بنجاح");
+      alert(t("signedInSuccessfully"));
 
     } catch (error) {
       setErrorMessage(handleFirebaseError(error));
@@ -94,14 +95,14 @@ const Login = () => {
   
   return (
     <div className="bg-white/90 dark:bg-gray-800/90 transition-colors duration-300 text-black dark:text-white p-10 rounded-2xl shadow-lg max-w-md w-full border border-gray-300 dark:border-gray-700">
-      <h1 className="text-2xl font-bold text-center">تسجيل الدخول</h1>
+      <h1 className="text-2xl font-bold text-center">{t("login")}</h1>
 
       {errorMessage && (
-        <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+        <p className="text-red-500 dark:text-red-400 text-sm text-center mt-2">{errorMessage}</p>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="my-4 text-right">
+        <div className={`my-4 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
           <label htmlFor="email" className="block mb-2 font-semibold">
             {t("email")}
           </label>
@@ -153,7 +154,7 @@ const Login = () => {
       </form>
         
       <div className="text-center mt-4">
-        <a href="/register" className="text-blue-500 hover:underline text-sm">{t("doesnotHaveAccount")}</a>
+        <a href="/register" className="text-blue-500 hover:underline text-sm">{t("dontHaveAccount")}</a>
       </div>
 
       <div className="relative my-4">

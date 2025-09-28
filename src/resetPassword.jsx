@@ -1,4 +1,4 @@
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { dopasswordreset } from "./Firebase/auth";
 import { useState, useEffect } from "react";
 
@@ -7,6 +7,7 @@ const ResetPassword = () => {
   const [isReseting, setIsReseting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [cooldown, setCooldown] = useState(0);
+  const { t, i18n } = useTranslation();
 
     useEffect(() => {
       if (cooldown === 0) return;
@@ -19,15 +20,15 @@ const ResetPassword = () => {
   const handleFirebaseError = (error) => {
     switch (error.code) {
       case "auth/invalid-email":
-        return "البريد الإلكتروني غير صحيح.";
+        return t("errors.invalidEmail");
       case "auth/too-many-requests":
-        return "تم حظر الحساب مؤقتاً بسبب محاولات فاشلة متكررة.";
+        return t("errors.tooManyRequests");
       case "auth/network-request-failed":
-        return "فشل الاتصال بالشبكة. تحقق من الإنترنت.";
+        return t("errors.networkRequestFailed");
 
       default:
         console.log(error);
-        return "حدث خطأ غير متوقع. حاول مرة أخرى.";
+        return t("errors.defaultError");
     }
   };
 
@@ -40,7 +41,7 @@ const ResetPassword = () => {
 
     try {
       await dopasswordreset(email);
-      alert("تم إرسال رابط إعادة تعيين كلمة السر إلى بريدك الإلكتروني.");
+      alert(t("passwordResetSent"));
       setCooldown(30);
     } catch (error) {
       setErrorMessage(handleFirebaseError(error));
@@ -55,11 +56,11 @@ const ResetPassword = () => {
       <h1 className="text-2xl font-bold text-center">{t("resetPassword")}</h1>
 
       {errorMessage && (
-        <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+        <p className="text-red-500 dark:text-red-400 text-sm text-center mt-2">{errorMessage}</p>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="my-4 text-right">
+        <div className={`my-4 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
           <label htmlFor="email" className="block mb-2 font-semibold">
             {t("email")}
           </label>

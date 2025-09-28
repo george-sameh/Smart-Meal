@@ -3,7 +3,7 @@
     "home": "الرئيسية",
     "profile": "حسابي",
     "search": "البحث...",
-    "searchFood...": "ابحث عن الطعام...",
+    "searchFood": "ابحث عن الطعام...",
     "login": "تسجيل الدخول",
     "name": "الاسم",
     "namePlaceholder": "فلان الفلاني",
@@ -19,7 +19,7 @@
     "secondsToResend": "ثانية لإعادة الإرسال",
     "backToLogin": "الرجوع إلى تسجيل الدخول",
     "sendResetLink": "إرسال رابط إعادة التعيين",
-    "doesnotHaveAccount": "ليس لديك حساب؟",
+    "dontHaveAccount": "ليس لديك حساب؟ سجل الآن",
     "or": "أو المتابعة باستخدام",
     "createAccount": "إنشاء حساب",
     "loggingIn": "جارٍ تسجيل الدخول...",
@@ -28,8 +28,26 @@
     "registering": "جارٍ التسجيل...",
     "verificationIsSent": "تم إرسال رابط التحقق إلى بريدك الإلكتروني.",
     "accountCreatedSuccessfully": "تم إنشاء الحساب بنجاح.",
+    "signedInSuccessfully": "تم تسجيل الدخول بنجاح.",
     "pleaseVerifyYourEmail.": "يرجى التحقق من بريدك الإلكتروني.",
-    "alreadyHaveAccount": "هل لديك حساب؟",
+    "alreadyHaveAccount": "لديك حساب؟ سجل الدخول",
     "createAccountWithGoogle": "إنشاء حساب باستخدام جوجل",
-    "creatingAccount": "جارٍ إنشاء الحساب..."
+    "creatingAccount": "جارٍ إنشاء الحساب...",
+    "passwordResetSent": "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
+    "emailNotVerifiedRedirect": "البريد الإلكتروني غير مفعل. جار إعادة التوجيه إلى صفحة التحقق.",
+
+    "errors": {
+        "invalidCredential": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+        "userNotFound": "لا يوجد حساب بهذا البريد الإلكتروني. برجاء التسجيل أولاً.",
+        "emailNotVerified": "البريد الإلكتروني غير مفعل.",
+        "tooManyRequests": "تم حظر الحساب مؤقتًا بسبب محاولات فاشلة متكررة.",
+        "networkRequestFailed": "فشل الاتصال بالشبكة. تحقق من الإنترنت.",
+        "popupClosedByUser": "تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية.",
+        "googleUserNotFound": "لا يوجد حساب بهذا البريد. برجاء التسجيل أولاً.",
+        "invalidEmail": "البريد الإلكتروني غير صحيح.",
+        "emailAlreadyInUse": "هذا البريد مسجل بالفعل.",
+        "passwordRequirements": "كلمة السر ضعيفة. يجب أن تكون 8 أحرف على الأقل وتشمل حروف صغيرة وأرقام.",
+        "defaultError": "حدث خطأ غير متوقع أثناء التسجيل."
+    }
+
 }

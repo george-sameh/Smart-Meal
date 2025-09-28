@@ -2,9 +2,10 @@ import { useState } from "react";
 import { docreateUserWithEmailAndPassword, dosendEmailVerification, dosigninwithgoogle } from "./Firebase/auth";
 import { db } from "./Firebase/firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,17 +15,17 @@ const Register = () => {
   const handleFirebaseError = (error) => {
     switch (error.code) {
       case "auth/invalid-email":
-        return "البريد الإلكتروني غير صحيح.";
+        return t("errors.invalidEmail");
       case "auth/email-already-in-use":
-        return "هذا البريد مسجل بالفعل.";
+        return t("errors.emailAlreadyInUse");
       case "auth/password-does-not-meet-requirements":
-        return "كلمة السر ضعيفة.  يجب أن تكون 8 أحرف على الأقل وتشمل حروف صغيرة وأرقام.";
+        return t("errors.passwordDoesNotMeetRequirements");
       case "auth/network-request-failed":
-        return "فشل الاتصال بالشبكة. تحقق من الإنترنت.";
+        return t("errors.networkRequestFailed");
 
       default:
         console.log(error);
-        return "حدث خطأ غير متوقع أثناء التسجيل.";
+        return t("errors.defaultError");
     }
   };
   
@@ -46,7 +47,7 @@ const Register = () => {
       });
 
       await dosendEmailVerification();
-      alert("تم إرسال رابط التحقق إلى بريدك الإلكتروني.");
+      alert(t("verificationIsSent"));
 
       } catch (error) {
         setErrorMessage(handleFirebaseError(error));
@@ -74,7 +75,7 @@ const Register = () => {
         },
         { merge: true } 
       );
-      alert("تم إنشاء الحساب بنجاح");
+      alert(t("accountCreatedSuccessfully"));
 
       } catch (error) {
         setErrorMessage(handleFirebaseError(error));
@@ -88,11 +89,11 @@ const Register = () => {
       <h1 className="text-2xl font-bold text-center">{t("createAccount")}</h1>
 
       {errorMessage && (
-        <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+        <p className="text-red-500 dark:text-red-400 text-sm text-center mt-2">{errorMessage}</p>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="my-4 text-right">
+        <div className={`my-4 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
           <label htmlFor="name" className="block mb-2 font-semibold">
             {t("name")}
           </label>
@@ -107,7 +108,7 @@ const Register = () => {
           />
         </div>
 
-        <div className="my-4 text-right">
+        <div className={`my-4 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
           <label htmlFor="email" className="block mb-2 font-semibold">
             {t("email")}
           </label>

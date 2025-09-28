@@ -60,13 +60,13 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
       </ul>
 
       <div className="relative hidden md:flex items-center justify-center gap-3">
-        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300" />
+        <Search className={`absolute ${i18n.language === 'ar' ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-gray-300`} />
         <input
           type="text"
           placeholder={t("search")}
           value={searchQuery || ""}
           onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
-          className={`rounded-xl py-2 pr-10 text-white border-blue-300 focus:bg-slate-600 focus:outline-sky-500 transition-all ${
+          className={`rounded-xl py-2 ${i18n.language === 'ar' ? 'pr-10' : 'pl-10'} text-white border-blue-300 focus:bg-slate-600 focus:outline-sky-500 transition-all ${
             isDarkMode ? "bg-gray-800" : "bg-white/30 border-white/40"
           }`}
         />
@@ -106,12 +106,12 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         <ul className="w-full flex flex-col items-center">
           <li className="w-full text-center p-4 hover:bg-sky-400 hover:text-white transition-all">
             <Link to="/" className="block w-full">
-              الرئيسية
+              {t("home")}
             </Link>
           </li>
           <li className="w-full text-center p-4 hover:bg-sky-400 hover:text-white transition-all">
             <Link to="/profile" className="block w-full">
-              حسابي
+              {t("profile")}
             </Link>
           </li>
         </ul>
@@ -119,13 +119,13 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         <div className="w-full max-w-xs mx-auto h-px bg-white/20 my-2 block lg:hidden"></div>
 
         <div className="relative flex md:hidden items-center justify-center w-11/12">
-          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300" />
+          <Search className={`absolute ${i18n.language === 'ar' ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-gray-300`} />
           <input
             type="text"
-            placeholder="البحث..."
+            placeholder={t("search")}
             value={searchQuery || ""}
             onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
-            className={`rounded-xl w-full py-2 pr-10 text-white border-2 border-blue-300 focus:bg-slate-500 focus:outline-sky-500 transition-all ${
+            className={`rounded-xl w-full py-2 ${i18n.language === 'ar' ? 'pr-10' : 'pl-10'} text-white border-2 border-blue-300 focus:bg-slate-500 focus:outline-sky-500 transition-all ${
               isDarkMode ? "bg-gray-800" : "bg-gray-700"
             }`}
           />
@@ -138,12 +138,12 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
           {isDarkMode ? (
             <>
               <Sun className="w-5 h-5 relative top-[0.5px] text-amber-400" />
-              <span className="leading-none">الوضع الفاتح</span>
+              <span className="leading-none">{i18n.language === "ar" ? "الوضع الفاتح" : "Light Mode"}</span>
             </>
           ) : (
             <>
               <Moon className="w-5 h-5 relative top-[0.5px] text-blue-300" />
-              <span className="leading-none">الوضع الداكن</span>
+              <span className="leading-none">{i18n.language === "ar" ? "الوضع الداكن" : "Dark Mode"}</span>
             </>
           )}
         </button>

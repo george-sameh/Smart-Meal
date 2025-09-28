@@ -2,6 +2,7 @@ import { dosendEmailVerification } from "./Firebase/auth";
 import { useState, useEffect } from "react";
 import { useAuth } from "./contexts/authContext";
 import { Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const VerifyEmail = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const VerifyEmail = () => {
   const [cooldown, setCooldown] = useState(0);
   
   const { userLoggedIn, currentUser } = useAuth();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (cooldown === 0) return;
@@ -28,15 +30,15 @@ const VerifyEmail = () => {
   const handleFirebaseError = (error) => {
     switch (error.code) {
       case "auth/invalid-email":
-        return "البريد الإلكتروني غير صحيح.";
+        return t("errors.invalidEmail");
       case "auth/too-many-requests":
-        return "تم حظر الحساب مؤقتاً بسبب محاولات فاشلة متكررة.";
+        return t("errors.tooManyRequests");
       case "auth/network-request-failed":
-        return "فشل الاتصال بالشبكة. تحقق من الإنترنت.";
+        return t("errors.networkRequestFailed");
 
       default:
         console.log(error);
-        return "حدث خطأ غير متوقع. حاول مرة أخرى.";
+        return t("errors.defaultError");
     }
   };
   
@@ -49,7 +51,7 @@ const VerifyEmail = () => {
 
     try {
       await dosendEmailVerification();
-      alert("تم إرسال رابط التحقق إلى بريدك الإلكتروني.");
+      alert (t("verificationIsSent"));
       setCooldown(30);
     } catch (error) {
       setErrorMessage(handleFirebaseError(error));
@@ -64,11 +66,11 @@ const VerifyEmail = () => {
       <h1 className="text-2xl font-bold text-center">{t("verifyEmail")}</h1>
 
       {errorMessage && (
-        <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>
+        <p className="text-red-500 dark:text-red-400 text-sm text-center mt-2">{errorMessage}</p>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="my-4 text-right">
+        <div className={`my-4 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
           <label htmlFor="email" className="block mb-2 font-semibold">
             {t("email")}
           </label>
