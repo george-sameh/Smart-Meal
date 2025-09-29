@@ -38,6 +38,10 @@
     "loading": "Loading...",
     "loadingName": "Loading Name...",
     "loadingDescription": "Loading Description...",
+    "welecome": "Welecome",
+    "favorites": "Favorites",
+    "loadingFavorites": "Loading Favorites...",
+    "noFavorites": "No favorites yet",
 
     "errors": {
         "invalidCredential": "Incorrect email or password.",

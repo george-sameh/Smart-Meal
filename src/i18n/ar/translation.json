@@ -38,6 +38,10 @@
     "loading": "جارٍ التحميل...",
     "loadingName": "جارٍ تحميل الاسم...",
     "loadingDescription": "جارٍ تحميل الوصف...",
+    "welecome": "مرحبا",
+    "favorites": "المفضلة",
+    "loadingFavorites": "جاري تحميل المفضلة...",
+    "noFavorites": "لا توجد عناصر مفضلة بعد",
 
     "errors": {
         "invalidCredential": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",

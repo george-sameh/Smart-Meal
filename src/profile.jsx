@@ -5,12 +5,14 @@ import { db } from "./Firebase/firebase";
 import { useEffect, useState } from "react";
 import { dosignout } from "./Firebase/auth";
 import FoodCard from "./components/FoodCard";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const { userLoggedIn, currentUser } = useAuth();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null); 
+  const [userData, setUserData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,24 +56,42 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <h1>Welcome {userData?.name || "User"} 👋</h1>
-      <p>Email: {currentUser.email}</p>
+    <div className="max-w-5xl mx-auto p-6">
+      
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 mb-8">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+          {t("welecome")} {userData?.name || "User"} 👋
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300 mt-1">
+          {t("email")}: {currentUser.email}
+        </p>
+      </div>
 
-      <h2>Favorites</h2>
-      {loading ? (
-        <p>Loading favorites...</p>
-      ) : favorites.length > 0 ? (
-        <div className="flex flex-wrap gap-4">
-          {favorites.map((food) => (
-            <FoodCard key={food.id} food={food} />
-          ))}
-        </div>
-      ) : (
-        <p>No favorites yet</p>
-      )}
+      <div>
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+          ⭐ {t("favorites")}
+        </h2>
+        {loading ? (
+          <p className="text-gray-500 dark:text-gray-400 italic">{t("loadingFavorites")}</p>
+        ) : favorites.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {favorites.map((food) => (
+              <FoodCard key={food.id} food={food} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 dark:text-gray-400 italic">{t("noFavorites")}</p>
+        )}
+      </div>
 
-      <button onClick={dosignout}>Log Out</button>
+      <div className="mt-10 flex justify-center">
+        <button
+          onClick={dosignout}
+          className="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition duration-200"
+        >
+          Log Out
+        </button>
+      </div>
     </div>
   );
 };
