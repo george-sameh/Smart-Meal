@@ -7,7 +7,7 @@ import Register from "./register";
 import ResetPassword from "./resetPassword";
 import VerifyEmail from "./verifyEmail";
 import Profile from "./profile";
-import FoodDetails from "./FoodDetails";
+import FoodDetails from "./foodDetails";
 
 const App = () => {
   const location = useLocation();
