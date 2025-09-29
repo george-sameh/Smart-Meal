@@ -1,15 +1,49 @@
 import { Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
+import { db } from "../Firebase/firebase";
+import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 const FoodCard = ({ food }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const { currentUser } = useAuth();
+  const [ isFav, setIsFav ] = useState(false);
 
   const lang = i18n.language === "ar" ? "ar" : "en";
 
   const name = food.name?.[lang] || t("loadingName");
   const description = food.description?.[lang] || t("loadingDescription");
   const beneficial = food.beneficialFor?.[lang] || [];
+
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (!currentUser) return;
+      const userRef = doc(db, "users", currentUser.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const favs = userSnap.data().favorites || [];
+        setIsFav(favs.includes(food.id));
+      }
+    };
+    checkFavorite();
+  }, [currentUser, food.id]);
+
+  const toggleFavorite = async (e) => {
+    e.preventDefault();
+    if (!currentUser) return alert("Please login first");
+
+    const userRef = doc(db, "users", currentUser.uid);
+
+    if (isFav) {
+      await updateDoc(userRef, { favorites: arrayRemove(food.id) });
+      setIsFav(false);
+    } else {
+      await updateDoc(userRef, { favorites: arrayUnion(food.id) });
+      setIsFav(true);
+    }
+  };
 
   return (
     <Link to={`/food/${food.id}`}>
@@ -24,9 +58,13 @@ const FoodCard = ({ food }) => {
             className="rounded-xl mx-auto"
           />
 
-          <button className={`absolute bottom-3 ${i18n.language === 'ar' ? 'left-3' : 'right-3'}`}>
-            <Heart className="w-6 h-6 text-white/90" />
+         <button
+            onClick={toggleFavorite}
+            className={`absolute bottom-3 ${lang === 'ar' ? 'left-3' : 'right-3'}`}
+          >
+            <Heart className={`w-6 h-6 ${isFav ? 'text-red-500' : 'text-white/90'}`} />
           </button>
+
         </div>
 
         <h2 className="text-gray-900 dark:text-white text-lg font-bold mt-2">

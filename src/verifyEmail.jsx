@@ -77,12 +77,10 @@ const VerifyEmail = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="example@email.com"
+            value={currentUser?.email || ""}
+            readOnly
             dir="ltr"
-            required
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all text-left"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all text-left"
           />
         </div>
 
