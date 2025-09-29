@@ -21,33 +21,61 @@ const FoodDetails = () => {
     fetchFood();
   }, [id]);
 
-  if (!food) return <p className="text-center mt-10">{t("loading")}</p>;
+  if (!food) return <p className="text-center text-black dark:text-white mt-10">{t("loading")}</p>;
 
   const lang = i18n.language === "ar" ? "ar" : "en";
 
-  const name = food.name?.[lang] || "Loading Name...";
-  const description = food.description?.[lang] || "Loading Description...";
+  const name = food.name?.[lang] || t("loadingName");
+  const description = food.description?.[lang] || t("loadingDescription");
   const beneficial = food.beneficialFor?.[lang] || [];
   const harmful = food.harmfulFor?.[lang] || [];
 
   return (
-    <div>
-      <h1>{name}</h1>
-      <img src={food.image} alt={name} />
-      <p>{description}</p>
+    <div className="p-6 w-full">
+      <div className="bg-white/90 dark:bg-gray-800/90 transition-colors duration-300 border border-gray-300 dark:border-gray-700 text-black dark:text-white shadow-lg rounded-xl p-6">
 
-      <div>
-        <span>
-          {lang === "ar" ? "✅ صحي ل:" : "✅ Beneficial for:"}
-        </span>
-        <p>{beneficial.join(lang === "ar" ? "، " : ", ")}</p>
-      </div>
+        {food.image && (
+          <img
+            src={food.image}
+            alt={name}
+            className={`w-full md:w-1/2 h-72 md:h-96 object-cover rounded-xl shadow-lg mb-4 ${lang === "ar" ? "float-left mr-6" : "float-right ml-6"}`} />
+        )}
 
-      <div>
-        <span>
-          {lang === "ar" ? "❌ ضار ل:" : "❌ Harmful for:"}
-        </span>
-        <p>{harmful.join(lang === "ar" ? "، " : ", ")}</p>
+        <h1
+          className={`text-3xl ${lang === "ar" ? "text-right" : "text-left"} font-bold text-gray-900 dark:text-white mb-4`}>
+          {name}
+        </h1>
+
+        <p
+          className={`text-gray-700 dark:text-gray-300 mb-6 leading-relaxed ${lang === "ar" ? "text-right" : "text-left"}`}>
+          {description}
+        </p>
+
+        {beneficial?.length > 0 && (
+          <div className={`mb-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+            <h2 className="font-semibold text-green-600 dark:text-green-400">
+              {lang === "ar" ? "✅ صحي ل:" : "✅ Beneficial for:"}
+            </h2>
+            
+            <p className="text-gray-700 dark:text-gray-300">
+              {beneficial.join(lang === "ar" ? "، " : ", ")}
+            </p>
+          </div>
+        )}
+
+        {harmful?.length > 0 && (
+          <div className={`mb-6 ${lang === "ar" ? "text-right" : "text-left"}`}>
+            <h2 className="font-semibold text-red-600 dark:text-red-400">
+              {lang === "ar" ? "❌ ضار ل:" : "❌ Harmful for:"}
+            </h2>
+
+            <p className="text-gray-700 dark:text-gray-300">
+              {harmful.join(lang === "ar" ? "، " : ", ")}
+            </p>
+          </div>
+        )}
+
+        <div className="clear-both"></div>
       </div>
     </div>
   );

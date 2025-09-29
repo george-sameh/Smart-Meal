@@ -36,6 +36,8 @@
     "passwordResetSent": "A password reset link has been sent to your email.",
     "emailNotVerifiedRedirect": "Email not verified. Redirecting to verification page.",
     "loading": "Loading...",
+    "loadingName": "Loading Name...",
+    "loadingDescription": "Loading Description...",
 
     "errors": {
         "invalidCredential": "Incorrect email or password.",

@@ -7,8 +7,8 @@ const FoodCard = ({ food }) => {
 
   const lang = i18n.language === "ar" ? "ar" : "en";
 
-  const name = food.name?.[lang] || "Loading Name...";
-  const description = food.description?.[lang] || "Loading Description...";
+  const name = food.name?.[lang] || t("loadingName");
+  const description = food.description?.[lang] || t("loadingDescription");
   const beneficial = food.beneficialFor?.[lang] || [];
 
   return (

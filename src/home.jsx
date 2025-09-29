@@ -31,7 +31,7 @@ const Home = () => {
   }, []);
 
   if (!ready || loading) {
-    return <p className="text-center mt-10">{t("loading")}</p>;
+    return <p className="text-center text-black dark:text-white mt-10">{t("loading")}</p>;
   }
 
   return (
