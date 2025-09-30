@@ -32,7 +32,7 @@ const FoodCard = ({ food }) => {
 
   const toggleFavorite = async (e) => {
     e.preventDefault();
-    if (!currentUser) return alert("Please login first");
+    if (!currentUser) return alert(t("loginFirst"));
 
     const userRef = doc(db, "users", currentUser.uid);
 

@@ -42,6 +42,8 @@
     "favorites": "Favorites",
     "loadingFavorites": "Loading Favorites...",
     "noFavorites": "No favorites yet",
+    "loginFirst": "Please login first",
+    "logout": "Logout",
 
     "errors": {
         "invalidCredential": "Incorrect email or password.",

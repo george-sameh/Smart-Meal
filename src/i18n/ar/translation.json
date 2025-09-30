@@ -42,6 +42,8 @@
     "favorites": "المفضلة",
     "loadingFavorites": "جاري تحميل المفضلة...",
     "noFavorites": "لا توجد عناصر مفضلة بعد",
+    "loginFirst": "الرجاء تسجيل الدخول اولا",
+    "logout": "تسجيل الخروج",
 
     "errors": {
         "invalidCredential": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",

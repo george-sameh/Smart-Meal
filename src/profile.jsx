@@ -57,7 +57,7 @@ const Profile = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6">
-      
+
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 mb-8">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
           {t("welecome")} {userData?.name || "User"} 👋
@@ -87,9 +87,9 @@ const Profile = () => {
       <div className="mt-10 flex justify-center">
         <button
           onClick={dosignout}
-          className="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition duration-200"
+          className="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition duration-200 cursor-pointer"
         >
-          Log Out
+          {t("logout")}
         </button>
       </div>
     </div>
