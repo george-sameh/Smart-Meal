@@ -9,7 +9,6 @@ import {
   signInWithPopup,
   signOut,
   sendPasswordResetEmail,
-  updatePassword,
   sendEmailVerification
 } from "firebase/auth";
 
@@ -32,10 +31,6 @@ export const dosignout = () => {
 
 export const dopasswordreset = (email) => {
   return sendPasswordResetEmail(auth, email);
-}
-
-export const dopasswordChange = (password) => {
-  return updatePassword(auth.currentUser, password);
 }
 
 export const dosendEmailVerification = () => {

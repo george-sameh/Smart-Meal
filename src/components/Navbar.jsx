@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const Navbar = ({ searchQuery, setSearchQuery }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -40,7 +40,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         <span className="text-green-400 text-lg font-bold">{t("smartMeal")}</span>
       </Link>
 
-      <ul className="hidden lg:flex items-center gap-10 font-semibold text-base">
+      <ul className="hidden md:flex items-center gap-10 font-semibold text-base">
         <li>
           <Link
             to="/"
@@ -59,19 +59,6 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         </li>
       </ul>
 
-      <div className="relative hidden md:flex items-center justify-center gap-3">
-        <Search className={`absolute ${i18n.language === 'ar' ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-gray-300`} />
-        <input
-          type="text"
-          placeholder={t("search")}
-          value={searchQuery || ""}
-          onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
-          className={`rounded-xl py-2 ${i18n.language === 'ar' ? 'pr-10' : 'pl-10'} text-white border-blue-300 focus:bg-slate-600 focus:outline-sky-500 transition-all ${
-            isDarkMode ? "bg-gray-800" : "bg-white/30 border-white/40"
-          }`}
-        />
-      </div>
-      
       <div className="flex gap-2 items-center">
         <button
           type="button"
@@ -117,19 +104,6 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         </ul>
 
         <div className="w-full max-w-xs mx-auto h-px bg-white/20 my-2 block lg:hidden"></div>
-
-        <div className="relative flex md:hidden items-center justify-center w-11/12">
-          <Search className={`absolute ${i18n.language === 'ar' ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-gray-300`} />
-          <input
-            type="text"
-            placeholder={t("search")}
-            value={searchQuery || ""}
-            onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
-            className={`rounded-xl w-full py-2 ${i18n.language === 'ar' ? 'pr-10' : 'pl-10'} text-white border-2 border-blue-300 focus:bg-slate-500 focus:outline-sky-500 transition-all ${
-              isDarkMode ? "bg-gray-800" : "bg-gray-700"
-            }`}
-          />
-        </div>
 
         <button
           onClick={toggleTheme}

@@ -44,6 +44,7 @@
     "noFavorites": "No favorites yet",
     "loginFirst": "Please login first",
     "logout": "Logout",
+    "noResults": "No results found.",
 
     "errors": {
         "invalidCredential": "Incorrect email or password.",
